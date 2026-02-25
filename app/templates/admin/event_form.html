@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="admin-wrap">
+  <div class="admin-card admin-wide">
+    <div class="admin-top">
+      <h1>
+        {% if mode == "new" %}Nová akce{% else %}Upravit akci #{{ event["id"] }}{% endif %}
+      </h1>
+      <a class="btn btn-ghost" href="/admin/events">Zpět</a>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash">
+          {% for cat, msg in messages %}
+            <div class="flash-item {{ cat }}">{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form method="post" enctype="multipart/form-data" class="form">
+      <label>
+        Datum (např. Pátek 2.2. / 20:00)
+        <input name="event_date" value="{{ event['event_date'] if event else '' }}" required />
+      </label>
+
+      <label>
+        Text
+        <textarea name="text" rows="6" required>{{ event["text"] if event else "" }}</textarea>
+      </label>
+
+      <label>
+        Foto (JPG/PNG/WEBP) {% if mode == "edit" %}– volitelné (nahradí staré){% endif %}
+        <input name="image" type="file" accept=".jpg,.jpeg,.png,.webp" />
+      </label>
+
+      <div class="form-actions">
+        <button class="btn" type="submit">Uložit</button>
+        <a class="btn btn-ghost" href="/admin/events">Zrušit</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

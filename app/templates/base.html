@@ -1,0 +1,23 @@
+﻿<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ site_name if site_name else "HOGO 2.0" }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@600;700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body class="is-loading">
+  <div class="loading-screen" aria-hidden="true">
+    <img src="/static/gallery/hogologo.png" alt="" class="loading-logo">
+    <div class="loading-bar"><span></span></div>
+  </div>
+
+  <div class="page-transition" aria-hidden="true"></div>
+
+  {% block body %}{% endblock %}
+  <script src="/static/js/main.js"></script>
+</body>
+</html>

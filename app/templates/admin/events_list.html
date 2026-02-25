@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="admin-wrap">
+  <div class="admin-card admin-wide">
+    <div class="admin-top">
+      <h1>Akce</h1>
+      <div class="admin-actions">
+        <a class="btn" href="/admin/events/new">+ Nová akce</a>
+        <form method="post" action="/admin/logout">
+          <button class="btn btn-ghost" type="submit">Odhlásit</button>
+        </form>
+      </div>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash">
+          {% for cat, msg in messages %}
+            <div class="flash-item {{ cat }}">{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="table">
+      <div class="trow thead">
+        <div>ID</div>
+        <div>Datum</div>
+        <div>Publikováno</div>
+        <div>Vytvořeno</div>
+        <div>Akce</div>
+      </div>
+
+      {% for e in events %}
+        <div class="trow">
+          <div>#{{ e["id"] }}</div>
+          <div>{{ e["event_date"] }}</div>
+          <div>
+            {% if e["published"] %}
+              <span class="pill ok">ANO</span>
+            {% else %}
+              <span class="pill off">NE</span>
+            {% endif %}
+          </div>
+          <div class="muted">{{ e["created_at"] }}</div>
+          <div class="tactions">
+            <a class="btn btn-small" href="/admin/events/{{ e['id'] }}/edit">Upravit</a>
+
+            <form method="post" action="/admin/events/{{ e['id'] }}/toggle">
+              <button class="btn btn-small btn-ghost" type="submit">
+                {% if e["published"] %}Skrýt{% else %}Publikovat{% endif %}
+              </button>
+            </form>
+
+            <form method="post" action="/admin/events/{{ e['id'] }}/delete" onsubmit="return confirm('Smazat akci?');">
+              <button class="btn btn-small btn-danger" type="submit">Smazat</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="admin-foot">
+      <a class="btn btn-ghost" href="/">Zpět na web</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

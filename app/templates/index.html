@@ -1,0 +1,137 @@
+﻿{% extends "base.html" %}
+{% block body %}
+
+<nav class="nav">
+  <a class="brand-logo-btn logo-in-nav" href="#top" aria-label="HOGO domů">
+    <img src="/static/gallery/hogologo.png" alt="HOGO 2.0 logo" class="brand-logo">
+  </a>
+  <div class="nav-links">
+    <a href="#uvod">Úvod</a>
+    <a href="#galerie">Galerie</a>
+    <a href="#akce">Akce</a>
+    <a href="#kontakt">Kontakt</a>
+    <a href="#oteviraci">Otevírací doba</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-overlay"></div>
+
+  <section class="hero-inner parallax-layer" id="uvod" data-parallax="18">
+    <h1>{{ site_name }}</h1>
+    <p class="hero-description">
+      HOGO 2.0 není jen bar. Je to místo, kde se potkávají lidi, hudba, drinky a dobrá nálada. Přes den pohoda, večer energie, party a nezapomenutelné momenty.
+      <br><br>
+      Kvalitní alkohol, originální koktejly, přátelská obsluha a akce, které stojí za to. DJs, tematické večery a speciální eventy jsou u nás samozřejmostí.
+      <br><br>
+      Přijď si užít atmosféru, která tě nepustí.
+    </p>
+    <div class="hero-actions">
+      <a class="btn" href="#galerie">Galerie</a>
+      <a class="btn btn-ghost" href="#kontakt">Kontakt</a>
+    </div>
+  </section>
+</header>
+
+<main class="main">
+
+  <section class="section" id="galerie">
+    <h2>Galerie</h2>
+
+    {% if gallery|length == 0 %}
+      <p class="muted">Galerie je zatím prázdná.</p>
+    {% else %}
+      <div class="gallery-slider parallax-layer" data-parallax="12" data-gallery-images='{{ gallery | tojson | safe }}'>
+        <button class="gallery-arrow left" type="button" aria-label="Předchozí fotka">&#10094;</button>
+        <div class="gallery-item">
+          <a class="gallery-link" id="sliderLink" href="{{ gallery[0] }}" target="_blank" rel="noopener">
+            <img src="{{ gallery[0] }}" id="sliderImage" alt="Foto z galerie" loading="lazy">
+          </a>
+        </div>
+        <button class="gallery-arrow right" type="button" aria-label="Další fotka">&#10095;</button>
+      </div>
+    {% endif %}
+  </section>
+
+  <section class="section" id="akce">
+    <h2>Blížící se akce</h2>
+
+    {% if events|length == 0 %}
+      <p class="muted">Zatím nejsou vypsané žádné akce.</p>
+    {% endif %}
+
+    <div class="events">
+      {% for e in events %}
+        <article class="event">
+          {% if e["image_filename"] %}
+            <div class="event-img">
+              <img src="{{ event_upload_url }}/{{ e['image_filename'] }}" alt="Akce foto" loading="lazy">
+            </div>
+          {% endif %}
+          <div class="event-body">
+            <div class="event-date">{{ e["event_date"] }}</div>
+            <div class="event-text">{{ e["text"] | e }}</div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="section" id="kontakt">
+    <h2>Kontakt</h2>
+    <div class="contact">
+      <div class="contact-card">
+        <div class="contact-row">
+          <div class="label">Adresa</div>
+          <div class="value">{{ address }}</div>
+        </div>
+
+        <div class="contact-row">
+          <div class="label">Instagram</div>
+          <div class="value">
+            <a href="{{ instagram_url }}" target="_blank" rel="noopener">hogo2bar</a>
+          </div>
+        </div>
+
+        <div class="contact-row">
+          <div class="label">Mapa</div>
+          <div class="value">
+            <a href="{{ map_open_link }}" target="_blank" rel="noopener">Otevřít v Mapách</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="map parallax-layer" data-parallax="8">
+        <iframe
+          src="{{ map_embed_src }}"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="oteviraci">
+    <h2>Otevírací doba</h2>
+    <div class="hours">
+      {% for day, time in opening_hours %}
+        <div class="hours-row">
+          <div class="hours-day">{{ day }}</div>
+          <div class="hours-time">{{ time }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>© {{ site_name }}</div>
+    <div><a href="/admin">Admin</a></div>
+  </div>
+</footer>
+
+{% endblock %}
+
