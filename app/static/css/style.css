@@ -662,42 +662,33 @@ body.is-transitioning .page-transition {
 }
 @media (max-width: 760px) {
 
-  /* NAVBAR */
   .nav {
-    min-height: 70px;
-    padding: 14px 14px 10px;
-    justify-content: center;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    min-height: 60px;
+    padding: 10px 14px;
+    justify-content: flex-end;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
   }
 
-  /* FLOATING LOGO */
+  /* LOGO vlevo jako na desktopu */
   .logo-in-nav {
     position: absolute;
-    top: -42px;              /* vysunutí nad lištu */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 3000;
+    left: 12px;
+    top: 6px;
+    transform: none;
   }
 
+  /* odstraníme button styl */
   .brand-logo-btn {
-    width: 110px;
-    padding: 10px 18px;
-    border-radius: 28px;
-
-    background: radial-gradient(circle at center,
-        rgba(214,40,30,1),
-        rgba(120,15,10,1));
-
-    box-shadow:
-      0 25px 70px rgba(214,40,30,0.9),
-      0 0 70px rgba(242,180,75,0.9),
-      0 0 110px rgba(214,40,30,0.6);
-
-    transition: 0.4s ease;
+    width: 110px;      /* zmenšené logo */
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
   }
 
   .brand-logo-btn:hover {
-    transform: translateX(-50%) scale(1.08);
+    transform: none;
+    box-shadow: none;
   }
 
   .brand-logo {
@@ -706,10 +697,10 @@ body.is-transitioning .page-transition {
     object-fit: contain;
   }
 
-  /* NAV LINKS */
+  /* navigace */
   .nav-links {
-    margin-top: 48px;   /* odsazení pod logo */
-    gap: 8px;
+    margin-top: 0;
+    gap: 6px;
   }
 
   .nav-links a {
@@ -717,30 +708,18 @@ body.is-transitioning .page-transition {
     padding: 8px 10px;
   }
 
-  /* OSTATNÍ MOBILNÍ ÚPRAVY */
+  /* ostatní mobilní úpravy */
   .hero-inner {
     padding: 104px 18px;
-  }
-
-  .hero-description {
-    font-size: 16px;
-    line-height: 1.75;
   }
 
   .section {
     padding: 90px 18px;
   }
 
-  .gallery-arrow {
-    width: 46px;
-    height: 46px;
-    font-size: 22px;
-  }
-
   .footer-inner {
     padding: 26px 18px;
   }
-
 }
 
   .hero {
