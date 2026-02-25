@@ -684,16 +684,36 @@ body.is-transitioning .page-transition {
 }
 
 @media (max-width: 760px) {
+
   .nav {
-    --nav-logo-w: clamp(150px, 40vw, 220px);
-    min-height: 84px;
-    padding: 10px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 64px;
+    padding: 8px 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
   }
 
   .logo-in-nav {
-    left: 8px;
-    top: 0;
+    position: static;          /* ZRUŠ absolutní pozici */
+    width: 140px;              /* pevná rozumná velikost */
   }
+
+  .brand-logo-btn {
+    width: 140px;
+  }
+
+  .nav-links {
+    width: auto;
+    margin-left: 0;
+    gap: 6px;
+  }
+
+  .nav-links a {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+}
 
   .hero {
     margin-top: 0;
@@ -721,7 +741,7 @@ body.is-transitioning .page-transition {
   .footer-inner {
     padding: 26px 18px;
   }
-}
+
 
 @media (prefers-reduced-motion: reduce) {
   *,
