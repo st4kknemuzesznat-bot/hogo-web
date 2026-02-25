@@ -7,7 +7,7 @@ class Config:
 
         # Admin
         self.ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "admin")
-        self.ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "change-me")
+        self.ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "hospoda")
 
         # DB
         self.DB_PATH = os.path.join(os.getcwd(), "instance", "app.db")

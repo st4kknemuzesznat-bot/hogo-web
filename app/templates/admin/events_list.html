@@ -1,68 +1,74 @@
 {% extends "base.html" %}
 {% block body %}
-<div class="admin-wrap">
-  <div class="admin-card admin-wide">
-    <div class="admin-top">
-      <h1>Akce</h1>
-      <div class="admin-actions">
-        <a class="btn" href="/admin/events/new">+ Nová akce</a>
-        <form method="post" action="/admin/logout">
-          <button class="btn btn-ghost" type="submit">Odhlásit</button>
-        </form>
+
+<div class="admin-wrapper admin-events-simple">
+  <header class="admin-header">
+    <h1 class="admin-title">Správa akcí</h1>
+    <p class="admin-subtitle">Jednoduchá obsluha: upravit, skrýt/publikovat, smazat.</p>
+  </header>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="admin-flash">
+        {% for cat, msg in messages %}
+          <div class="flash-item {{ cat }}">{{ msg }}</div>
+        {% endfor %}
       </div>
-    </div>
+    {% endif %}
+  {% endwith %}
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <div class="flash">
-          {% for cat, msg in messages %}
-            <div class="flash-item {{ cat }}">{{ msg }}</div>
-          {% endfor %}
-        </div>
-      {% endif %}
-    {% endwith %}
+  <section class="admin-manage-top" aria-label="Rychlé akce">
+    <a href="{{ url_for('admin.events_new') }}" class="admin-btn">+ Nová akce</a>
+    <a href="/" class="admin-btn admin-btn-secondary">Zpět na web</a>
+    <form action="{{ url_for('admin.logout') }}" method="post" class="admin-action-form">
+      <button type="submit" class="admin-btn admin-logout">Odhlásit</button>
+    </form>
+  </section>
 
-    <div class="table">
-      <div class="trow thead">
-        <div>ID</div>
-        <div>Datum</div>
-        <div>Publikováno</div>
-        <div>Vytvořeno</div>
-        <div>Akce</div>
-      </div>
+  {% if events %}
+    <section class="admin-events-simple-list" aria-label="Seznam akcí">
+      {% for event in events %}
+        <article class="admin-card admin-event-simple">
+          <div class="admin-event-simple-main">
+            <div class="admin-event-simple-head">
+              <strong class="admin-date">{{ event.event_date }}</strong>
+              {% if event.published %}
+                <span class="admin-status published">Publikováno</span>
+              {% else %}
+                <span class="admin-status hidden">Skryto</span>
+              {% endif %}
+            </div>
 
-      {% for e in events %}
-        <div class="trow">
-          <div>#{{ e["id"] }}</div>
-          <div>{{ e["event_date"] }}</div>
-          <div>
-            {% if e["published"] %}
-              <span class="pill ok">ANO</span>
-            {% else %}
-              <span class="pill off">NE</span>
-            {% endif %}
+            <p class="admin-text">{{ event.text }}</p>
+
+            <div class="admin-event-simple-meta">
+              <span>ID: #{{ event.id }}</span>
+              <span>Vytvořeno: {{ event.created_at }}</span>
+              {% if event.image_filename %}
+                <a href="/static/uploads/events/{{ event.image_filename }}" target="_blank" rel="noopener">Náhled fotky</a>
+              {% else %}
+                <span>Bez fotky</span>
+              {% endif %}
+            </div>
           </div>
-          <div class="muted">{{ e["created_at"] }}</div>
-          <div class="tactions">
-            <a class="btn btn-small" href="/admin/events/{{ e['id'] }}/edit">Upravit</a>
 
-            <form method="post" action="/admin/events/{{ e['id'] }}/toggle">
-              <button class="btn btn-small btn-ghost" type="submit">
-                {% if e["published"] %}Skrýt{% else %}Publikovat{% endif %}
-              </button>
+          <div class="admin-event-simple-actions">
+            <a href="{{ url_for('admin.events_edit', event_id=event.id) }}" class="admin-action-btn">Upravit</a>
+
+            <form action="{{ url_for('admin.events_toggle', event_id=event.id) }}" method="post" class="admin-action-form">
+              <button class="admin-action-btn" type="submit">{% if event.published %}Skrýt{% else %}Publikovat{% endif %}</button>
             </form>
 
-            <form method="post" action="/admin/events/{{ e['id'] }}/delete" onsubmit="return confirm('Smazat akci?');">
-              <button class="btn btn-small btn-danger" type="submit">Smazat</button>
+            <form action="{{ url_for('admin.events_delete', event_id=event.id) }}" method="post" class="admin-action-form" onsubmit="return confirm('Opravdu smazat tuto akci?');">
+              <button class="admin-action-btn delete" type="submit">Smazat</button>
             </form>
           </div>
-        </div>
+        </article>
       {% endfor %}
-    </div>
-
-    <div class="admin-foot">
-      <a class="btn btn-ghost" href="/">Zpět na web</a>
-    </div>
-  </div>
+    </section>
+  {% else %}
+    <p class="admin-empty">Zatím žádné akce.</p>
+  {% endif %}
 </div>
+
 {% endblock %}
