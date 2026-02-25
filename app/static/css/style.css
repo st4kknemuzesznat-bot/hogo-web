@@ -662,39 +662,41 @@ body.is-transitioning .page-transition {
 }
 @media (max-width: 760px) {
 
+  /* NAVBAR zůstává normální */
   .nav {
-    min-height: 60px;
-    padding: 10px 14px;
-    justify-content: flex-end;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    min-height: 40px;
+    padding: 0px 0px 0px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
   }
 
-  /* LOGO vlevo jako na desktopu */
+  /* LOGO – samostatné mimo lištu */
   .logo-in-nav {
     position: absolute;
-    left: 12px;
-    top: 6px;
-    transform: none;
+    left: 14px;
+    top: 40x;/* vysune nad lištu */
+    z-index: 3000;
   }
 
-  /* odstraníme button styl */
+  /* odstraníme button vzhled */
   .brand-logo-btn {
-    width: 110px;      /* zmenšené logo */
+    width: 155px;        /* velikost loga */
     padding: 0;
     background: transparent;
     border-radius: 0;
     box-shadow: none;
   }
 
-  .brand-logo-btn:hover {
-    transform: none;
-    box-shadow: none;
-  }
-
+  /* glow jen kolem PNG */
   .brand-logo {
     width: 100%;
     height: auto;
     object-fit: contain;
+    filter: drop-shadow(0 8px 15px rgba(214,40,30,0.6))
+            drop-shadow(0 0 30px rgba(242,180,75,0.5));
+  }
+
+  .brand-logo-btn:hover {
+    transform: scale(1.05);
   }
 
   /* navigace */
